@@ -1,8 +1,19 @@
-import { FlatList, View, StyleSheet, Text } from 'react-native';
-
+import { FlatList, View, StyleSheet, Pressable, Image } from 'react-native';
+import RepositoryItem from './RepositoryItem';
+import { useState } from 'react';
+import Text from './Text';
+import theme from '../theme';
+import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 const styles = StyleSheet.create({
+    container: {
+        padding: 10,
+    },
     separator: {
         height: 10,
+    },
+    logo: {
+        width: theme.logo.width,
+        height: theme.logo.height
     },
 });
 
@@ -56,24 +67,41 @@ const repositories = [
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const RepositoryList = () => {
+
+    const [showItem, setShowItem] = useState(null);
     return (
         <>
-            <Text> test1213</Text>
-            <FlatList
-                data={repositories}
-                ItemSeparatorComponent={ItemSeparator}
-                renderItem={({ item }) =>
-                    <View>
-                        <Text>fullName:ч{item.fullName}</Text>
-                        <Text>description:{item.description}</Text>
-                        <Text>language:{item.language}</Text>
-                        <Text>stargazersCount:{item.stargazersCount}</Text>
-                        <Text>reviewCount:{item.reviewCount}</Text>
-                        <Text>ratingAverage:{item.ratingAverage}</Text>
-                    </View>
-                }
-            // other props
-            />
+            {showItem
+                ?
+                <RepositoryItem item={showItem} setShowItem={setShowItem} />
+                :
+                <FlatList
+                    data={repositories}
+                    ItemSeparatorComponent={ItemSeparator}
+                    renderItem={({ item }) =>
+                        <Pressable onPress={() => setShowItem(item)}>
+                            {/* <SafeAreaView style={styles.container}>  */}
+                            <View style={styles.container}>
+                                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', gap: 10 }}>
+                                    <Image style={styles.logo} source={{
+                                        uri: item.ownerAvatarUrl,
+                                    }} />
+                                    <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', maxWidth: '90%', rowGap: 10 }}>
+                                        <Text color={'textPrimary'} fontWeight={'bold'} fontSize={'heading'}>{item.fullName}</Text>
+                                        <Text color={'textSecondary'} fontSize={'body'}>{item.description}</Text>
+                                        <View style={{ maxWidth: '40%' }}><Text color={'textPrimary'} style={{ backgroundColor: theme.colors.primary }}>{item.language}</Text></View>
+                                    </View>
+                                </View>
+
+                                <Text>stargazersCount:{item.stargazersCount}</Text>
+                                <Text>reviewCount:{item.reviewCount}</Text>
+                                <Text>ratingAverage:{item.ratingAverage}</Text>
+                            </View>
+                            {/* </SafeAreaView> */}
+                        </Pressable>
+                    }
+                // other props
+                />}
         </>
     );
 };
