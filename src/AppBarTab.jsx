@@ -1,12 +1,10 @@
 import { Pressable, Text } from "react-native";
 import theme from "../theme";
 
-const AppBarTab = ({ text, onPress }) => {
+const AppBarTab = ({ text }) => {
 
     return (
-        <Pressable onPress={() => { }}>
-            <Text style={theme.cotnainerText}>{text}</Text>
-        </Pressable>
+        <Text style={theme.cotnainerText}>{text}</Text>
     )
 }
 

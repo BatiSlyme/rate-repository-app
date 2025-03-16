@@ -17,6 +17,14 @@ const styles = StyleSheet.create({
     },
 });
 
+const Info = ({ main, info }) => {
+    return (
+        <View style={{ display: 'flex', alignItems: 'center' }}>
+            <Text style={{ fontWeight: 'bold' }}>{main}</Text>
+            <Text>{info}</Text>
+        </View>)
+}
+
 const repositories = [
     {
         id: 'jaredpalmer.formik',
@@ -80,7 +88,7 @@ const RepositoryList = () => {
                     ItemSeparatorComponent={ItemSeparator}
                     renderItem={({ item }) =>
                         <Pressable onPress={() => setShowItem(item)}>
-                            {/* <SafeAreaView style={styles.container}>  */}
+                            {/* <SafeAreaView style={styles</View>.container}>  */}
                             <View style={styles.container}>
                                 <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', gap: 10 }}>
                                     <Image style={styles.logo} source={{
@@ -89,13 +97,20 @@ const RepositoryList = () => {
                                     <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', maxWidth: '90%', rowGap: 10 }}>
                                         <Text color={'textPrimary'} fontWeight={'bold'} fontSize={'heading'}>{item.fullName}</Text>
                                         <Text color={'textSecondary'} fontSize={'body'}>{item.description}</Text>
-                                        <View style={{ maxWidth: '40%' }}><Text color={'textPrimary'} style={{ backgroundColor: theme.colors.primary }}>{item.language}</Text></View>
+                                        <Text color={'textPrimary'} style={{ backgroundColor: theme.colors.primary, color: 'white', alignSelf: 'flex-start' }}>{item.language}</Text>
+
                                     </View>
                                 </View>
 
-                                <Text>stargazersCount:{item.stargazersCount}</Text>
-                                <Text>reviewCount:{item.reviewCount}</Text>
-                                <Text>ratingAverage:{item.ratingAverage}</Text>
+
+
+                                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', margin: 10 }}>
+                                    <Info main={Math.round(item.stargazersCount / 1000) + 'k'} info='stars' />
+                                    <Info main={Math.round(item.forksCount / 1000) + 'k'} info='forks' />
+                                    <Info main={item.reviewCount} info='revies' />
+                                    <Info main={item.ratingAverage} info='rating' />
+                                </View>
+
                             </View>
                             {/* </SafeAreaView> */}
                         </Pressable>
