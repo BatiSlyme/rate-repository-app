@@ -23,10 +23,10 @@ const styles = StyleSheet.create({
   },
   fontWeightBold: {
     fontWeight: theme.fontWeights.bold,
-  },
+  }
 });
 
-const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
+const Text = ({ color, fontSize, fontWeight, fontFamily, style, ...props }) => {
   const textStyle = [
     styles.text,
     color === 'textSecondary' && styles.colorTextSecondary,

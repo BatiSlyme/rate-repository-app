@@ -6,8 +6,7 @@ import { NativeRouter } from 'react-router-native';
 export default function App() {
   return (
     <>
-
-      <NativeRouter>
+      <NativeRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
         <AppBar />
         <Main />
       </NativeRouter>
