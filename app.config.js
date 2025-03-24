@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 export default {
     "name": "rate-repository-app",
     "slug": "rate-repository-app",
@@ -27,5 +29,6 @@ export default {
     },
     extra: {
       env: process.env.ENV,
+      APOLLO_URI: 'http://172.16.39.239:4000/graphql'
     },
 }

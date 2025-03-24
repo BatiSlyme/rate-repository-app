@@ -11,7 +11,7 @@ const useRepositories = () => {
   }
   // console.log('data', data);
 
-  const repositories = data.repositories;
+  const repositories = data?.repositories;
 
   return { repositories, loading };
 };
