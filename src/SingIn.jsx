@@ -1,11 +1,13 @@
 import { useFormik } from 'formik';
 import { View, Button, TextInput, Text } from 'react-native';
 import * as yup from 'yup';
+import useSignIn from './hooks/useSignIn';
+import { useNavigate } from 'react-router-native';
 
 const validationSchema = yup.object().shape({
   username: yup
     .string()
-    .min(7, 'Username must be longer or equal to 7')
+    .min(3, 'Username must be longer or equal to 7')
     .required('Username is required'),
   password: yup
     .string()
@@ -19,7 +21,6 @@ const initialValues = {
 };
 
 const InputBox = ({ placeholder, value, formik, style }) => {
-
   return (
     <View>
       <TextInput
@@ -43,11 +44,20 @@ const InputBox = ({ placeholder, value, formik, style }) => {
 }
 
 const SignIn = () => {
+  const [signIn] = useSignIn();
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values) => {
-      console.log(values.username, values.password);
+    onSubmit: async (values) => {
+      const { username, password } = values;
+      try {
+        await signIn({ username, password });
+        navigate('/repositoryList');
+      } catch (error) {
+        formik.setErrors({ username: 'Invalid username or password', password: 'Invalid username or password' });
+        console.log(error);
+      }
     },
   });
 
@@ -59,7 +69,5 @@ const SignIn = () => {
     </View>
   );
 };
-
-
 
 export default SignIn;
