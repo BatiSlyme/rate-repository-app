@@ -14,8 +14,11 @@ const useSignIn = () => {
         // console.log('signing in', username, password);
         const { data } = await mutate({ variables: { username, password } });
         console.log('Request:', { username, password });
-        console.log('Response:', data);
+        console.log('Response:', data.authenticate.accessToken);
         await tokenStorage.setAccessToken(data.authenticate.accessToken);
+        const token = await tokenStorage.getAccessToken()
+        console.log('set token to ', token);
+
         client.resetStore()
     };
 

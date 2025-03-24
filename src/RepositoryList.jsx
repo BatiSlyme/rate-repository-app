@@ -32,7 +32,7 @@ const RepositoryList = () => {
     const { repositories } = useRepositories();
 
     // Get the nodes from the edges array
-    console.log('repositories in list', repositories);
+    // console.log('repositories in list', repositories);
     const repositoryNodes = repositories?.edges?.map(edge => edge.node) || [];
 
     const [showItem, setShowItem] = useState(null);

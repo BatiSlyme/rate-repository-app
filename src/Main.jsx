@@ -1,4 +1,5 @@
 import { Text, StyleSheet, View } from 'react-native';
+import useCheckAuthentication from './hooks/useCheckAuthentication';
 // import RepositoryList from './RepositoryList';
 // import { Route, Routes, Navigate, Link } from 'react-router-native';
 // import SignIn from './SingIn';
@@ -11,10 +12,11 @@ const styles = StyleSheet.create({
 });
 
 const Main = () => {
+    const me = useCheckAuthentication();
+
     return (
         <View style={styles.container}>
-            <Text>Rate Repository Application</Text>
-
+            <Text>Rate Repository Application{me ? `. Welcome ${me.username}!` : ''}</Text>
         </View>
     );
 };
