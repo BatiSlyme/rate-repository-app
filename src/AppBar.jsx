@@ -1,11 +1,13 @@
 import { View, ScrollView, Pressable } from 'react-native';
 import styles from '../theme';
-import { Link, Route, Routes, NativeRouter, Navigate } from 'react-router-native';
+import { Link, Route, Routes, NativeRouter, useParams, Navigate } from 'react-router-native';
 import RepositoryList from './RepositoryList';
 import SignIn from './SingIn';
 import AppBarTab from './AppBarTab';
 import { useSignOut } from './hooks/useSignOut';
 import useCheckAuthentication from './hooks/useCheckAuthentication';
+import RepositoryItem from './RepositoryItem';
+import useRepositoryById from './hooks/useRepositoryById';
 
 const AppBar = () => {
     const { signOut } = useSignOut();
@@ -20,7 +22,8 @@ const AppBar = () => {
             </View>
             <Routes>
                 <Route path='/signIn' element={<SignIn />} />
-                <Route path='/repositoryList' element={<RepositoryList />} />
+                <Route path={`/repositoryList`} element={<RepositoryList />} />
+                <Route path={`/:repositoryId`} element={<RepositoryItem />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </>
