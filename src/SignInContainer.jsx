@@ -1,4 +1,4 @@
-import { TextInput, View } from "react-native";
+import { TextInput, View, Button } from "react-native";
 import Text from "./Text";
 
 const InputBox = ({ placeholder, value, formik, style }) => {
