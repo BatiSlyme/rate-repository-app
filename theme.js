@@ -20,7 +20,7 @@ const theme = {
     },
     container: {
         paddingTop: Constants.statusBarHeight,
-        backgroundColor: 'grey',
+        backgroundColor: '#586069',
         display: 'flex',
         flexDirection: 'row'
     },

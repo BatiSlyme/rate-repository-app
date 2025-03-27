@@ -14,3 +14,15 @@ export const ME = gql`{
       username
     }
   }`;
+
+export const CREATE_REVIEW = gql`mutation CreateReview($review: CreateReviewInput!) {
+  createReview(review: $review) {
+    createdAt
+    id
+    rating
+    repositoryId
+    userId
+    text
+  }
+}
+`;

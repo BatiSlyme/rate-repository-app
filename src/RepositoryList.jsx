@@ -8,18 +8,19 @@ import RepositoryRenderItem from './RepositoryRenderItem';
 import { ItemSeparator } from './ItemSeparator';
 
 const RepositoryList = () => {
-    const { repositories } = useRepositories();
+    const { repositories, loading } = useRepositories();
 
     const repositoryNodes = repositories?.edges?.map(edge => edge.node) || [];
 
-    return (
-            <FlatList
-                data={repositoryNodes}
-                ItemSeparatorComponent={ItemSeparator}
-                renderItem={({ item }) =>
-                    <RepositoryRenderItem item={item} navigatable={true} />
-                }
-            />
+    return (<>
+        {loading ? <Text style={{ fontSize: 30 }}> Loading... </Text> : <FlatList
+            data={repositoryNodes}
+            ItemSeparatorComponent={ItemSeparator}
+            renderItem={({ item }) =>
+                <RepositoryRenderItem item={item} navigatable={true} />
+            }
+        />
+        }</>
     );
 };
 

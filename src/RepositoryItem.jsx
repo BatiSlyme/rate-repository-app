@@ -8,11 +8,13 @@ import Text from "./Text";
 import { format, compareAsc } from "date-fns";
 
 const styles = StyleSheet.create({
-    circleContainer: {
+    container: {
         flexDirection: "row",
         gap: 10,
         maxWidth: '85%',
         margin: 10,
+        height: 'auto',
+        alignItems: 'flex-start' // Ensures alignment
     },
     circle: {
         borderRadius: 100,
@@ -23,19 +25,21 @@ const styles = StyleSheet.create({
         alignSelf: "flex-start",
         alignItems: "center",
         justifyContent: "center",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        minHeight: 50 // Ensures consistent height
+
     },
     circleText: {
         fontSize: 20,
         color: theme.colors.primary
     },
-    textContainer: { maxWidth: '95%' }
+    textContainer: { flex: 1 }
 });
 
 const ReviewItem = ({ reviews }) => {
     console.log('reviews', reviews);
     return (
-        <View style={styles.circleContainer}>
+        <View style={styles.container}>
             <View style={styles.circle}>
                 <Text style={styles.circleText}>{reviews?.node?.rating}</Text>
             </View>
@@ -51,6 +55,7 @@ const ReviewItem = ({ reviews }) => {
 const RepositoryItem = () => {
     let { repositoryId } = useParams();
     const { data, loading, reviews } = useRepositoryById(repositoryId);
+    console.log('length', reviews?.edges.length);
     return (
         <>
             {loading
@@ -62,10 +67,19 @@ const RepositoryItem = () => {
                     renderItem={({ item }) => <ReviewItem reviews={item} />}
                     keyExtractor={({ node }) => node.id}
                     ItemSeparatorComponent={ItemSeparator}
-                    ListHeaderComponent={<RepositoryRenderItem
-                        item={data ?? []}
-                        navigatable={false}
-                    />}
+                    ListHeaderComponent={
+                        <>
+                            <RepositoryRenderItem
+                                item={data ?? []}
+                                navigatable={false}
+                            />
+                            <ItemSeparator />
+                        </>}
+                    ListEmptyComponent={
+                        <View style={{ padding: 20, alignItems: "center" }}>
+                            <Text>No reviews yet.</Text>
+                        </View>
+                    }
                 />
             }
         </>

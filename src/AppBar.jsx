@@ -8,6 +8,7 @@ import { useSignOut } from './hooks/useSignOut';
 import useCheckAuthentication from './hooks/useCheckAuthentication';
 import RepositoryItem from './RepositoryItem';
 import useRepositoryById from './hooks/useRepositoryById';
+import CreateReview from './CreateReview';
 
 const AppBar = () => {
     const { signOut } = useSignOut();
@@ -16,14 +17,17 @@ const AppBar = () => {
         <>
             <View style={styles.container}>
                 <ScrollView horizontal style={{ alignSelf: 'flex-start' }}>
-                    {!signedIn ? <Link underlayColor="#f0f4f7" to={'/signIn'}><AppBarTab text={'Sign In'} /></Link> : <Pressable onPress={() => { signOut() }} ><AppBarTab text={'Sign Out'} /></Pressable>}
+                    {!signedIn && <Link underlayColor="#f0f4f7" to={'/signIn'}><AppBarTab text={'Sign In'} /></Link>}
                     <Link underlayColor="#f0f4f7" to={'/repositoryList'}><AppBarTab text={'Rendering with React'} /></Link>
+                    {signedIn && <Link underlayColor="#f0f4f7" to={'/createReview'}><AppBarTab text={'Create a review'} /></Link>}
+                    {signedIn && <Pressable onPress={() => { signOut() }} ><AppBarTab text={'Sign Out'} /></Pressable>}
                 </ScrollView>
             </View>
             <Routes>
                 <Route path='/signIn' element={<SignIn />} />
                 <Route path={`/repositoryList`} element={<RepositoryList />} />
                 <Route path={`/:repositoryId`} element={<RepositoryItem />} />
+                <Route path={`/createReview`} element={<CreateReview />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </>
