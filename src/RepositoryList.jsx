@@ -1,26 +1,24 @@
-import { FlatList, View, StyleSheet, Pressable } from 'react-native';
-import RepositoryItem from './RepositoryItem';
-import { useEffect, useState } from 'react';
+import { FlatList, Pressable } from 'react-native';
+import { useState } from 'react';
 import Text from './Text';
-import theme from '../theme';
 import useRepositories from './hooks/useRepositories';
 import RepositoryRenderItem from './RepositoryRenderItem';
 import { ItemSeparator } from './ItemSeparator';
-import MyComponent from './Picker/Picker';
+import Picker from './Picker/Picker';
 import { List } from 'react-native-paper';
 
 const RepositoryList = () => {
-    const { repositories, loading } = useRepositories();
+    const [title, setTitle] = useState('Latest repositories');
+    const { repositories, loading } = useRepositories(title);
     const repositoryNodes = repositories?.edges?.map(edge => edge.node) || [];
     const [visible, setVisible] = useState(false);
     const toggleVisibility = () => {
         setVisible(!visible)
         console.log(visible);
     };
-    const [title, setTitle] = useState('Latest repositories');
     return (
         <>
-            <MyComponent visible={visible} setVisible={setVisible} setTitle={setTitle} />
+            <Picker visible={visible} setVisible={setVisible} setTitle={setTitle} />
             {loading ? <Text style={{ fontSize: 30 }}> Loading... </Text> : <FlatList
                 data={repositoryNodes}
                 ItemSeparatorComponent={ItemSeparator}

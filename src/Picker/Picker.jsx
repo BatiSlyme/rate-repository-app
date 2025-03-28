@@ -2,6 +2,7 @@
 import { View, StyleSheet } from 'react-native';
 import { Menu } from 'react-native-paper';
 import Text from '../Text';
+import { Modal as RNModal } from 'react-native';
 
 const styles = StyleSheet.create({
     modalOverlay: {
@@ -24,10 +25,7 @@ const styles = StyleSheet.create({
     },
 });
 
-
-import { Modal as RNModal } from 'react-native';
-
-const MyComponent = ({ visible, setVisible, setTitle }) => {
+const Picker = ({ visible, setVisible, setTitle }) => {
     const onTitleChange = (title) => {
         setTitle(title);
         setVisible(!visible);
@@ -60,4 +58,4 @@ const MyComponent = ({ visible, setVisible, setTitle }) => {
         </RNModal>)
 };
 
-export default MyComponent;
+export default Picker;

@@ -3,6 +3,7 @@ import * as yup from 'yup';
 import useSignIn from './hooks/useSignIn';
 import { useNavigate } from 'react-router-native';
 import SignInContainer from './SignInContainer';
+import useSignUp from './hooks/useSignUp';
 
 const validationSchema = yup.object().shape({
   username: yup
@@ -14,16 +15,22 @@ const validationSchema = yup.object().shape({
     .string()
     .min(5, 'Password must be longer than 5')
     .max(50, 'Password must be shorter or equal to 50')
-    .required('Password is required')
+    .required('Password is required'),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Passwords must match')
+    .required('Password confirmation is required'),
 });
 
 const initialValues = {
   username: '',
   password: '',
+  confirmPassword: '',
 };
 
-const SignIn = () => {
+const SignUp = () => {
   const [signIn] = useSignIn();
+  const { signUp } = useSignUp();
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues,
@@ -31,6 +38,7 @@ const SignIn = () => {
     onSubmit: async (values) => {
       const { username, password } = values;
       try {
+        await signUp({ username, password });
         await signIn({ username, password });
         navigate('/repositoryList');
       } catch (error) {
@@ -41,8 +49,8 @@ const SignIn = () => {
   });
 
   return (
-    <SignInContainer formik={formik} />
+    <SignInContainer signUp formik={formik} />
   )
 };
 
-export default SignIn;
+export default SignUp;
