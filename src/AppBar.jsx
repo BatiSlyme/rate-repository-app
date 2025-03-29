@@ -10,6 +10,7 @@ import RepositoryItem from './RepositoryItem';
 import useRepositoryById from './hooks/useRepositoryById';
 import CreateReview from './CreateReview';
 import SignUp from './SignUp';
+import MyReviews from './MyReviews';
 
 const AppBar = () => {
     const { signOut } = useSignOut();
@@ -22,6 +23,7 @@ const AppBar = () => {
                     {!signedIn && <Link underlayColor="#f0f4f7" to={'/signUp'}><AppBarTab text={'Sign up'} /></Link>}
                     <Link underlayColor="#f0f4f7" to={'/repositoryList'}><AppBarTab text={'Rendering with React'} /></Link>
                     {signedIn && <Link underlayColor="#f0f4f7" to={'/createReview'}><AppBarTab text={'Create a review'} /></Link>}
+                    {signedIn && <Link underlayColor="#f0f4f7" to={'/myReviews'}><AppBarTab text={'My Reviews'} /></Link>}
                     {signedIn && <Pressable onPress={() => { signOut() }} ><AppBarTab text={'Sign Out'} /></Pressable>}
                 </ScrollView>
             </View>
@@ -31,6 +33,7 @@ const AppBar = () => {
                 <Route path={`/repositoryList`} element={<RepositoryList />} />
                 <Route path={`/:repositoryId`} element={<RepositoryItem />} />
                 <Route path={`/createReview`} element={<CreateReview />} />
+                <Route path={`/myReviews`} element={<MyReviews />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </>

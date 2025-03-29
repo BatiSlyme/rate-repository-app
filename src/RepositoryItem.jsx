@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     textContainer: { flex: 1 }
 });
 
-const ReviewItem = ({ reviews }) => {
+export const ReviewItem = ({ reviews }) => {
     console.log('reviews', reviews);
     return (
         <View style={styles.container}>
@@ -51,6 +51,12 @@ const ReviewItem = ({ reviews }) => {
         </View>
     );
 };
+
+export const ReviewEmpty = () => (
+    <View style={{ padding: 20, alignItems: "center" }}>
+        <Text>No reviews yet.</Text>
+    </View>
+);
 
 const RepositoryItem = () => {
     let { repositoryId } = useParams();
@@ -75,11 +81,7 @@ const RepositoryItem = () => {
                             />
                             <ItemSeparator />
                         </>}
-                    ListEmptyComponent={
-                        <View style={{ padding: 20, alignItems: "center" }}>
-                            <Text>No reviews yet.</Text>
-                        </View>
-                    }
+                    ListEmptyComponent={ReviewEmpty}
                 />
             }
         </>

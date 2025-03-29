@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client"
-import { ME } from "../graphql/mutations"
+import { ME } from "../graphql/queries"
 import { useState } from "react";
 
 const useCheckAuthentication = () => {

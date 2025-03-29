@@ -1,23 +1,27 @@
 import { useQuery } from '@apollo/client';
 import { GET_REPOSITORIES } from '../graphql/queries';
-let variables = { orderBy: 'CREATED_AT', orderDirection: 'DESC' };
 
-const useRepositories = (title) => {
+const useRepositories = (title, searchBy) => {
+  console.log('useRepositories', title, searchBy);
+  
+  let variables = { orderBy: 'CREATED_AT', orderDirection: 'DESC', searchKeyword: searchBy };
+
   switch (title) {
     case 'Latest repositories':
-      variables = { orderBy: 'CREATED_AT', orderDirection: 'DESC' };
+      variables = { ...variables, orderBy: 'CREATED_AT', orderDirection: 'DESC' };
       break;
     case 'Highest rated repositories':
-      variables = { orderBy: 'RATING_AVERAGE', orderDirection: 'DESC' };
+      variables = { ...variables, orderBy: 'RATING_AVERAGE', orderDirection: 'DESC' };
       break;
     case 'Lowest rated repositories':
-      variables = { orderBy: 'RATING_AVERAGE', orderDirection: 'ASC' };
+      variables = { ...variables, orderBy: 'RATING_AVERAGE', orderDirection: 'ASC' };
       break;
     default:
-      variables = { orderBy: 'CREATED_AT', orderDirection: 'DESC' };
+      variables = { ...variables, orderBy: 'CREATED_AT', orderDirection: 'DESC' };
       break;
   }
-
+  console.log('variables', variables);
+  
   const { data, error, loading, refetch } = useQuery(GET_REPOSITORIES, {
     fetchPolicy: 'cache-and-network',
     variables,

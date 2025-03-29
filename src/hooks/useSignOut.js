@@ -2,8 +2,7 @@ import { Alert } from "react-native";
 import AuthStorage from "../utils/authStorage"
 import { useApolloClient } from "@apollo/client";
 import { useNavigate } from "react-router-native";
-import { useContext } from "react";
-import AuthStorageContext from "../contexts/AuthStorageContext";
+
 
 export const useSignOut = () => {
     const client = useApolloClient();

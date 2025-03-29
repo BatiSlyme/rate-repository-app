@@ -8,12 +8,7 @@ export const LOGIN = gql`
   }
 `;
 
-export const ME = gql`{
-    me {
-      id
-      username
-    }
-  }`;
+
 
 export const CREATE_REVIEW = gql`mutation CreateReview($review: CreateReviewInput!) {
   createReview(review: $review) {
