@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import InputBox from "./commonComponents/InputBox";
 import { Button, View } from "react-native";
 import * as yup from 'yup';
-import useCreateReview from "./hooks/useCreateReview";
+import useCreateReview from "./hooks/useReview";
 import Text from "./Text";
 
 const validationSchema = yup.object().shape({
@@ -39,7 +39,7 @@ const CreateReview = () => {
                     text: values.review
                 });
             } catch (error) {
-                console.log(error);
+                console.log('error creating review', error);
             }
 
         }

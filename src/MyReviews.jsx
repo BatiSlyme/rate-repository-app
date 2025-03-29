@@ -1,8 +1,9 @@
 import useCurrentReviews from "./hooks/useCurrentReviews";
 import Text from "./Text";
-import { ReviewEmpty, ReviewItem } from "./RepositoryItem";
+import { ReviewEmpty } from "./RepositoryItem";
 import { ItemSeparator } from "./ItemSeparator";
 import { FlatList, View } from "react-native";
+import ReviewItem from "./ReviewItem";
 
 const MyReviews = () => {
     const { data, loading, error } = useCurrentReviews();
@@ -16,13 +17,12 @@ const MyReviews = () => {
 
     if (loading) {
         return <Text>Loading...</Text>
-
     }
 
     return (
         <FlatList
             data={reviews}
-            renderItem={({ item }) => <ReviewItem reviews={item} />}
+            renderItem={({ item }) => <ReviewItem reviews={item} actions />}
             ItemSeparatorComponent={ItemSeparator}
             ListEmptyComponent={ReviewEmpty}
         />
