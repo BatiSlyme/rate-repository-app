@@ -10,12 +10,16 @@ import RepositoryListHeader from './RepositoryListHeader';
 const RepositoryList = () => {
     const [title, setTitle] = useState('Latest repositories');
     const [searchTerm, setSearchTerm] = useState('');
-    const { repositories, loading } = useRepositories(title, searchTerm);
+    const { repositories, fetchMore, loading, fetchMoreLoading } = useRepositories(title, searchTerm);
     const repositoryNodes = repositories?.edges?.map(edge => edge.node) || [];
     const [visible, setVisible] = useState(false);
     const toggleVisibility = () => {
         setVisible(!visible)
         console.log(visible);
+    };
+    const onEndReach = () => {
+        console.log('You have reached the end of the list');
+        fetchMore();
     };
     return (
         <>
@@ -37,7 +41,9 @@ const RepositoryList = () => {
                                 toggleVisibility={toggleVisibility}
                             />
                         }
+                        onEndReached={onEndReach}
                     />
+                    {fetchMoreLoading && <Text style={{ fontSize: 30 }}> Loading more... </Text>}
                 </>
             }
         </>

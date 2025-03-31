@@ -2,8 +2,8 @@ import { gql } from '@apollo/client';
 import { REPOSITORY_FIELDS, REVIEW_FIELDS } from './fragments';
 
 export const GET_REPOSITORIES = gql`
- query filterRepositories($orderBy: AllRepositoriesOrderBy!, $orderDirection: OrderDirection!, $searchKeyword: String!) {
-  repositories(orderBy: $orderBy, orderDirection: $orderDirection,searchKeyword: $searchKeyword) {
+ query filterRepositories($after: String, $orderBy: AllRepositoriesOrderBy!, $orderDirection: OrderDirection!, $searchKeyword: String!) {
+  repositories(first: 4, after: $after, orderBy: $orderBy, orderDirection: $orderDirection,searchKeyword: $searchKeyword) {
     ...RepositoryFields
   }
 }
@@ -11,7 +11,7 @@ ${REPOSITORY_FIELDS}
 `;
 
 export const GET_REPOSITORY_BY_ID = gql`
-  query getRepositoryById($repositoryId: ID!) {
+  query getRepositoryById($repositoryId: ID!,$after: String) {
     repository(id: $repositoryId) {
       id
       name
@@ -26,7 +26,7 @@ export const GET_REPOSITORY_BY_ID = gql`
       language
       ownerAvatarUrl
       url
-      reviews {
+      reviews(first: 3, after: $after) {
         ...ReviewFields
         pageInfo {
           startCursor

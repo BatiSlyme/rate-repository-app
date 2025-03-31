@@ -14,29 +14,36 @@ export const ReviewEmpty = () => (
 
 const RepositoryItem = () => {
     let { repositoryId } = useParams();
-    const { data, loading, reviews } = useRepositoryById(repositoryId);
+    const { data, loading, reviews, fetchMore, reviewsLoading } = useRepositoryById(repositoryId);
     console.log('length', reviews?.edges.length);
+    const handleEndReach = () => {
+        console.log('You have reached the end of the reviews list');
+        fetchMore();
+    };
     return (
         <>
             {loading
                 ?
                 <Text>Loading...</Text>
-                :
-                <FlatList
-                    data={reviews?.edges}
-                    renderItem={({ item }) => <ReviewItem reviews={item} />}
-                    keyExtractor={({ node }) => node.id}
-                    ItemSeparatorComponent={ItemSeparator}
-                    ListHeaderComponent={
-                        <>
-                            <RepositoryRenderItem
-                                item={data ?? []}
-                                navigatable={false}
-                            />
-                            <ItemSeparator />
-                        </>}
-                    ListEmptyComponent={ReviewEmpty}
-                />
+                : <>
+                    <FlatList
+                        data={reviews?.edges}
+                        renderItem={({ item }) => <ReviewItem reviews={item} />}
+                        keyExtractor={({ node }) => node.id}
+                        ItemSeparatorComponent={ItemSeparator}
+                        ListHeaderComponent={
+                            <>
+                                <RepositoryRenderItem
+                                    item={data ?? []}
+                                    navigatable={false}
+                                />
+                                <ItemSeparator />
+                            </>}
+                        ListEmptyComponent={ReviewEmpty}
+                        onEndReached={handleEndReach}
+                    />
+                    {reviewsLoading && <Text>Loading more reviews...</Text>}
+                </>
             }
         </>
     )
